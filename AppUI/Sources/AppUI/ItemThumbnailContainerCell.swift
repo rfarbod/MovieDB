@@ -6,3 +6,6 @@
 //
 
 import Foundation
+import UIKit
+
+final class ItemThumbnailContainerCell: ContainerTableViewCell<ItemThumbnailView> {}

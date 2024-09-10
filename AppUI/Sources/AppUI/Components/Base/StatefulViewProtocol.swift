@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol StatefulViewProtocol: UIView {
+public protocol StatefulViewProtocol: UIView {
     associatedtype Model: ViewModelProtocol
 
     var model: Model { get set }
