@@ -10,7 +10,7 @@ import SnapKit
 import UIKit
 
 open class ContainerTableViewCell<ContentView: StatefulViewProtocol>: TableViewCell {
-    open class var isDynamicallyResizable: Bool { return false }
+    open class var isDynamicallyResizable: Bool { return true }
 
     public private(set) lazy var view: ContentView = .instantiate(bundle: bundle)
 

@@ -8,4 +8,4 @@
 import Foundation
 import UIKit
 
-final class ItemThumbnailContainerCell: ContainerTableViewCell<ItemThumbnailView> {}
+public final class ItemThumbnailContainerCell: ContainerTableViewCell<ItemThumbnailView> {}

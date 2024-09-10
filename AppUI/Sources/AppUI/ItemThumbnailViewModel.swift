@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ItemThumbnailViewModel: ViewModelProtocol {
+public struct ItemThumbnailViewModel: ViewModelProtocol {
     let title: String
     let description: String
     let imagePath: String
@@ -27,7 +27,12 @@ struct ItemThumbnailViewModel: ViewModelProtocol {
 }
 
 extension ItemThumbnailViewModel {
-    static var `default`: ItemThumbnailViewModel = .init(title: "", imagePath: "", rating: 0.0)
+    public static var `default`: ItemThumbnailViewModel = .init(
+        title: "a movie",
+        description: "a good movie",
+        imagePath: "",
+        rating: 0
+    )
 }
 
 
