@@ -13,13 +13,11 @@ class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         view.backgroundColor = .systemBackground
 
         tableView.register(cellOfType: ItemThumbnailContainerCell.self)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.reloadData()
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in

@@ -56,14 +56,22 @@
 		130EE7142C9081AF00DA2F4C /* MovieDB */ = {
 			isa = PBXGroup;
 			children = (
+				130EE72E2C90B8C100DA2F4C /* Home */,
 				130EE72C2C909C7E00DA2F4C /* LaunchScreen.storyboard */,
 				130EE7152C9081AF00DA2F4C /* AppDelegate.swift */,
 				130EE7172C9081AF00DA2F4C /* SceneDelegate.swift */,
-				130EE7192C9081AF00DA2F4C /* HomeViewController.swift */,
 				130EE71E2C9081B000DA2F4C /* Assets.xcassets */,
 				130EE7232C9081B000DA2F4C /* Info.plist */,
 			);
 			path = MovieDB;
+			sourceTree = "<group>";
+		};
+		130EE72E2C90B8C100DA2F4C /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				130EE7192C9081AF00DA2F4C /* HomeViewController.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
