@@ -8,12 +8,12 @@
 import Foundation
 
 public struct ItemThumbnailViewModel: ViewModelProtocol {
-    let title: String
-    let description: String
-    let imagePath: String
-    let rating: Double
+    public let title: String
+    public let description: String
+    public let imagePath: String
+    public let rating: Double
 
-    init(
+    public init(
         title: String = Self.default.title,
         description: String = Self.default.description,
         imagePath: String = Self.default.imagePath,
