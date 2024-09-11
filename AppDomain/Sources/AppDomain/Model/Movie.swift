@@ -23,17 +23,19 @@ public struct MovieResponse: Decodable {
 
 public struct Movie: Decodable, Identifiable, Hashable {
     public let id: Int
-    public let posterPath: URL?
+    public let posterPath: String?
     public let overview: String?
     public let title: String?
+    public let voteAverage: Double?
 
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         id = try values.decode(Int.self, forKey: .id)
         let posterPathString = try values.decodeIfPresent(String.self, forKey: .posterPath) ?? ""
-        posterPath = URL(string: imageBaseUrl + posterPathString)
+        posterPath = imageBaseUrl + posterPathString
         overview = try values.decodeIfPresent(String.self, forKey: .overview)
         title = try values.decodeIfPresent(String.self, forKey: .title)
+        voteAverage = try values.decodeIfPresent(Double.self, forKey: .voteAverage)
     }
 
     enum CodingKeys: String, CodingKey {
@@ -41,5 +43,6 @@ public struct Movie: Decodable, Identifiable, Hashable {
         case posterPath = "poster_path"
         case overview
         case title
+        case voteAverage = "vote_average"
     }
 }

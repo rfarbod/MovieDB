@@ -7,6 +7,7 @@
 
 import Foundation
 import SnapKit
+import SDWebImage
 import UIKit
 
 public final class ItemThumbnailView: StatefulView<ItemThumbnailViewModel> {
@@ -30,9 +31,11 @@ public final class ItemThumbnailView: StatefulView<ItemThumbnailViewModel> {
         
         imageView.layer.cornerRadius = Constants.cornerRadius
         imageView.backgroundColor = .orange
+        imageView.clipsToBounds = true
         addSubview(imageView)
         imageView.snp.makeConstraints { make in
-            make.top.bottom.trailing.equalToSuperview().inset(Constants.padding)
+            make.top.trailing.equalToSuperview().inset(Constants.padding)
+            make.bottom.equalToSuperview().inset(Constants.padding).priority(.low)
             make.height.equalTo(Constants.imageViewHeight)
             make.width.equalTo(Constants.imageViewWidth)
         }
@@ -77,7 +80,9 @@ public final class ItemThumbnailView: StatefulView<ItemThumbnailViewModel> {
         descLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(Constants.padding)
             make.leading.equalToSuperview().offset(Constants.padding)
-            make.trailing.equalTo(self.ratingLabel.snp.leading).inset(Constants.padding)
+            make.width.equalToSuperview().multipliedBy(0.5)
+            make.height.greaterThanOrEqualTo(imageView.snp.height)
+            make.bottom.equalToSuperview().inset(Constants.padding).priority(.high)
         }
     }
 
@@ -87,5 +92,8 @@ public final class ItemThumbnailView: StatefulView<ItemThumbnailViewModel> {
         titleLabel.text = model.title
         ratingLabel.text = "\(model.rating.rounded())"
         descLabel.text = model.description
+
+        imageView.contentMode = .scaleAspectFit
+        imageView.sd_setImage(with: URL(string: model.imagePath))
     }
 }

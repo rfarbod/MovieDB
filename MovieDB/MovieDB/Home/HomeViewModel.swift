@@ -36,7 +36,9 @@ final class HomeViewModel {
                 moviesList.results?.forEach({ movie in
                     self.model.items.append(.init(
                         title: movie.title ?? "",
-                        description: movie.overview ?? ""
+                        description: movie.overview ?? "",
+                        imagePath: movie.posterPath ?? "",
+                        rating: movie.voteAverage ?? 0
                     ))
                 })
             })
