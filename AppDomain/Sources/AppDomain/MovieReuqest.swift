@@ -15,7 +15,7 @@ extension MovieRequest: RequestProtocol {
     var path: String {
         switch self {
         case .list:
-            return "/discover/movie"
+            return "/movie/popular"
         }
     }
 

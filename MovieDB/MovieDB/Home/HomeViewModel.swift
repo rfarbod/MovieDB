@@ -12,7 +12,7 @@ import Foundation
 final class HomeViewModel {
     @Published var model: HomeModel
     private var movieAPI: MovieAPI = .init()
-    private var currentPage: Int = 0
+    private var currentPage: Int = 1
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -22,15 +22,18 @@ final class HomeViewModel {
 
     func getItems() {
         model.isLoading = true
-        
-        currentPage += 1
+
         movieAPI.list(page: currentPage)
             .receive(on: DispatchQueue.main)
+            .removeDuplicates(by: { lhs, rhs in
+                lhs.page == rhs.page
+            })
             .sink(receiveCompletion: { [weak self] completion in
                 guard let self else { return }
                 switch completion {
                 case .finished:
                     self.model.isLoading = false
+                    currentPage += 1
 
                 case let .failure(error):
                     self.model.isLoading = false
