@@ -8,18 +8,19 @@
 import Foundation
 import Combine
 
-protocol NetworkManagerProtocol {
+public protocol NetworkManagerProtocol {
     func request(api: RequestProtocol, retryCount: Int) -> AnyPublisher<Data, Error>
 }
 
-class NetworkManager: NetworkManagerProtocol {
-    static let shared = NetworkManager()
+public class NetworkManager: NetworkManagerProtocol {
+    static public let shared = NetworkManager()
     let urlSession: URLSession
+
     private init(config: URLSessionConfiguration = .default) {
         self.urlSession = URLSession(configuration: config)
     }
 
-    func request(api: RequestProtocol, retryCount: Int) -> AnyPublisher<Data, Error> {
+    public func request(api: RequestProtocol, retryCount: Int) -> AnyPublisher<Data, Error> {
         guard let apiRequest = api.urlRequest() else {
             return Fail(error: APIError.badRequest).eraseToAnyPublisher()
         }

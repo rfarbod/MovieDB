@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct MovieResponse: Decodable {
+public struct MovieResponse: Decodable {
+    public let results: [Movie]?
     let page: Int?
-    let results: [Movie]?
     let totalPages: Int?
     let totalResults: Int?
 
@@ -21,11 +21,11 @@ struct MovieResponse: Decodable {
     }
 }
 
-struct Movie: Decodable, Identifiable, Hashable {
-    let id: Int
-    let posterPath: URL?
-    let overview: String?
-    let title: String?
+public struct Movie: Decodable, Identifiable, Hashable {
+    public let id: Int
+    public let posterPath: URL?
+    public let overview: String?
+    public let title: String?
 
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)

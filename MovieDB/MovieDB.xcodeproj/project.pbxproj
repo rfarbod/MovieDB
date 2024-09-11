@@ -15,6 +15,7 @@
 		130EE72D2C909C7E00DA2F4C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 130EE72C2C909C7E00DA2F4C /* LaunchScreen.storyboard */; };
 		130EE7302C90B9E400DA2F4C /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130EE72F2C90B9E400DA2F4C /* HomeModel.swift */; };
 		130EE7322C90BB0F00DA2F4C /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130EE7312C90BB0F00DA2F4C /* HomeViewModel.swift */; };
+		130EE7352C915BA200DA2F4C /* AppDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 130EE7342C915BA200DA2F4C /* AppDomain */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				130EE7352C915BA200DA2F4C /* AppDomain in Frameworks */,
 				130EE72B2C90998100DA2F4C /* AppUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -98,6 +100,7 @@
 			name = MovieDB;
 			packageProductDependencies = (
 				130EE72A2C90998100DA2F4C /* AppUI */,
+				130EE7342C915BA200DA2F4C /* AppDomain */,
 			);
 			productName = MovieDB;
 			productReference = 130EE7122C9081AF00DA2F4C /* MovieDB.app */;
@@ -129,6 +132,7 @@
 			mainGroup = 130EE7092C9081AF00DA2F4C;
 			packageReferences = (
 				130EE7292C90998100DA2F4C /* XCLocalSwiftPackageReference "../AppUI" */,
+				130EE7332C915BA200DA2F4C /* XCLocalSwiftPackageReference "../AppDomain" */,
 			);
 			productRefGroup = 130EE7132C9081AF00DA2F4C /* Products */;
 			projectDirPath = "";
@@ -378,12 +382,20 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = ../AppUI;
 		};
+		130EE7332C915BA200DA2F4C /* XCLocalSwiftPackageReference "../AppDomain" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../AppDomain;
+		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		130EE72A2C90998100DA2F4C /* AppUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AppUI;
+		};
+		130EE7342C915BA200DA2F4C /* AppDomain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppDomain;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
