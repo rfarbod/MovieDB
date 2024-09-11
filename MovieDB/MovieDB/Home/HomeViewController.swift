@@ -25,7 +25,7 @@ final class HomeViewController: StatefulViewController<HomeModel> {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -61,6 +61,12 @@ final class HomeViewController: StatefulViewController<HomeModel> {
         super.didChangeModel()
 
         tableView.reloadData()
+
+        if model.isLoading {
+            view.addLoadingIndicator()
+        } else {
+            view.removeLoadingIndicator()
+        }
     }
 }
 
@@ -80,3 +86,14 @@ extension HomeViewController: UITableViewDataSource {
 
 extension HomeViewController: UITableViewDelegate {}
 
+extension HomeViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let frameHeight = scrollView.frame.size.height
+
+        if offsetY > contentHeight - frameHeight {
+            viewModel.getItems()
+        }
+    }
+}
