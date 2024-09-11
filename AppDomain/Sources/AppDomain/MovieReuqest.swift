@@ -6,3 +6,26 @@
 //
 
 import Foundation
+
+enum MovieRequest {
+    case list(page: Int)
+}
+
+extension MovieRequest: RequestProtocol {
+    var path: String {
+        switch self {
+        case .list:
+            return "/discover/movie"
+        }
+    }
+
+    var parameters: RequestParameters? {
+        switch self {
+        case let .list(page):
+            return [
+                "page": page
+            ]
+        }
+    }
+
+}
