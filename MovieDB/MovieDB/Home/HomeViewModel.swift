@@ -8,7 +8,7 @@
 import Foundation
 
 final class HomeViewModel {
-    @Published var model: HomeModel = .default
+    @Published var model: HomeModel
 
     init(model: HomeModel) {
         self.model = model
