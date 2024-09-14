@@ -11,6 +11,10 @@ import Foundation
 import UIKit
 
 final class MovieDetailsViewController: StatefulViewController<MovieDetailsModel> {
+    private enum Constants {
+        static let heightForHeader0: CGFloat = 300
+    }
+
     private var viewModel: MovieDetailsViewModel
 
     private lazy var scrollView: UIScrollView = .init()
@@ -71,6 +75,7 @@ final class MovieDetailsViewController: StatefulViewController<MovieDetailsModel
 
     private func setupView() {
         view.backgroundColor = .systemBackground
+        navigationController?.navigationBar.tintColor = .label
 
         setupScrollView()
         setupContentView()
@@ -110,7 +115,7 @@ extension MovieDetailsViewController: UIScrollViewDelegate {
 
         let offsetY = scrollView.contentOffset.y
         if offsetY < 0 {
-            headerView.frame = CGRect(x: headerView.frame.origin.x, y: offsetY, width: detailsView.tableView.frame.width, height: 300 - offsetY)
+            headerView.frame = CGRect(x: headerView.frame.origin.x, y: offsetY, width: detailsView.tableView.frame.width, height: Constants.heightForHeader0 - offsetY)
         }
     }
 }
