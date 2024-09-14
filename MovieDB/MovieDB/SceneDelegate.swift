@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = UINavigationController(
-                rootViewController: HomeViewController(viewModel: .init(model: .default))
+                rootViewController: MoviesViewController(viewModel: .init(model: .default))
             )
             self.window = window
             window.makeKeyAndVisible()
