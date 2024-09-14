@@ -13,7 +13,7 @@ import Foundation
 public final class MoviesViewModel {
     @Published public var model: MoviesModel
     public var movieAPI: MovieAPIProtocol
-    private var currentPage: Int = 1
+    private var currentPage: Int = 0
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -57,7 +57,6 @@ public final class MoviesViewModel {
                             rating: movie.voteAverage ?? 0
                         )
                 })
-
                 self.model.items = self.model.items + newItems
             })
             .store(in: &cancellables)

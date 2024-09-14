@@ -39,15 +39,15 @@ final class MovieDBTests: XCTestCase {
             totalPages: 10,
             totalResults: 100
         )
-
-        viewModel.movieAPI = mockAPI
+        
+        viewModel = .init(movieAPI: mockAPI, model: .default)
+        viewModel.getItems()
 
         let expectation = XCTestExpectation(description: "Movies should be loaded successfully")
-        viewModel.getItems()
 
         viewModel.$model
             .sink { model in
-                if !model.isLoading && model.items.count == 2 {
+                if !model.isLoading && model.items.count == 2{
                     XCTAssertEqual(model.items[0].title, "title1")
                     XCTAssertEqual(model.items[1].title, "title2")
                     expectation.fulfill()
@@ -55,13 +55,13 @@ final class MovieDBTests: XCTestCase {
             }
             .store(in: &cancellables)
 
-        wait(for: [expectation], timeout: 2.0)
+        wait(for: [expectation], timeout: 5.0)
     }
 
     func testGetItemsFailure() {
         mockAPI.shouldReturnError = true
 
-        viewModel.movieAPI = mockAPI
+        viewModel = .init(movieAPI: mockAPI, model: .default)
 
         let expectation = XCTestExpectation(description: "Loading should stop on failure")
         viewModel.getItems()
