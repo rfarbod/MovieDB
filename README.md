@@ -6,7 +6,6 @@ Features
 
 	•	Fetch and display a list of popular movies using TMDb API.
 	•	Show detailed information about each movie, including the poster, release date, and rating.
-	•	Responsive and adaptive UI for different device sizes.
 
 Screenshots
 
