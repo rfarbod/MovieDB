@@ -9,18 +9,22 @@ import AppDomain
 import Combine
 import Foundation
 
-final class MoviesViewModel {
-    @Published var model: MoviesModel
-    private var movieAPI: MovieAPI = .init()
+public final class MoviesViewModel {
+    @Published public var model: MoviesModel
+    public var movieAPI: MovieAPIProtocol
     private var currentPage: Int = 1
 
     private var cancellables = Set<AnyCancellable>()
 
-    init(model: MoviesModel) {
+    public init(
+        movieAPI: MovieAPIProtocol,
+        model: MoviesModel
+    ) {
+        self.movieAPI = movieAPI
         self.model = model
     }
 
-    func getItems() {
+    public func getItems() {
         model.isLoading = true
         
         currentPage += 1

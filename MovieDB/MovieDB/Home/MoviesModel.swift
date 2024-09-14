@@ -8,9 +8,9 @@
 import AppUI
 import Foundation
 
-struct MoviesModel: ViewModelProtocol {
-    var isLoading: Bool
-    var items: [ItemThumbnailViewModel]
+public struct MoviesModel: ViewModelProtocol {
+    public var isLoading: Bool
+    public var items: [ItemThumbnailViewModel]
 
     init(
         isLoading: Bool = Self.default.isLoading,
@@ -22,7 +22,7 @@ struct MoviesModel: ViewModelProtocol {
 }
 
 extension MoviesModel {
-    static var `default`: MoviesModel = .init(
+    public static var `default`: MoviesModel = .init(
         isLoading: true,
         items: []
     )

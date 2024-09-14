@@ -5,6 +5,7 @@
 //  Created by Farbod Rahiminik on 9/10/24.
 //
 
+import AppDomain
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -18,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = UINavigationController(
-                rootViewController: MoviesViewController(viewModel: .init(model: .default))
+                rootViewController: MoviesViewController(viewModel: .init(movieAPI: MovieAPI(), model: .default))
             )
             self.window = window
             window.makeKeyAndVisible()

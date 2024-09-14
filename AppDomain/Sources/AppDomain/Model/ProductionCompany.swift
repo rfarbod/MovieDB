@@ -20,6 +20,16 @@ public struct ProductionCompany: Codable {
         self.name = try container.decode(String.self, forKey: .name)
     }
 
+    public init(
+        id: Int,
+        logoPath: String,
+        name: String
+    ) {
+        self.id = id
+        self.logoPath = logoPath
+        self.name = name
+    }
+
     enum CodingKeys: String, CodingKey {
         case id
         case logoPath = "logo_path"

@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-protocol MovieAPIProtocol {
+public protocol MovieAPIProtocol {
     func list(page: Int) -> AnyPublisher<MovieResponse, Error>
     func details(id: String) -> AnyPublisher<Movie, Error>
 }

@@ -19,6 +19,13 @@ public struct MovieResponse: Decodable {
         case totalPages = "total_pages"
         case totalResults = "total_results"
     }
+
+    public init(results: [Movie]?, page: Int?, totalPages: Int?, totalResults: Int?) {
+        self.results = results
+        self.page = page
+        self.totalPages = totalPages
+        self.totalResults = totalResults
+    }
 }
 
 public struct Movie: Decodable {
@@ -30,6 +37,26 @@ public struct Movie: Decodable {
     public let voteCount: Int?
     public let genres: [Genre]?
     public let productionCompanies: [ProductionCompany]?
+
+    public init(
+        id: Int,
+        posterPath: String?,
+        overview: String?,
+        title: String?,
+        voteAverage: Double?,
+        voteCount: Int?,
+        genres: [Genre]?,
+        productionCompanies: [ProductionCompany]
+    ) {
+        self.id = id
+        self.posterPath = posterPath
+        self.overview = overview
+        self.title = title
+        self.voteAverage = voteAverage
+        self.voteCount = voteCount
+        self.genres = genres
+        self.productionCompanies = productionCompanies
+    }
 
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
