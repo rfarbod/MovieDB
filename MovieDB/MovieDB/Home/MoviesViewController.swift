@@ -102,7 +102,7 @@ extension MoviesViewController: UIScrollViewDelegate {
         let contentHeight = scrollView.contentSize.height
         let frameHeight = scrollView.frame.size.height
 
-        if offsetY > contentHeight - frameHeight {
+        if offsetY > contentHeight - frameHeight && !model.isLoading {
             viewModel.getItems()
         }
     }

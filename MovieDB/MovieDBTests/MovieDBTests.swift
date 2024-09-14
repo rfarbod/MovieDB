@@ -77,4 +77,47 @@ final class MovieDBTests: XCTestCase {
         wait(for: [expectation], timeout: 2.0)
     }
 
+    func testPaginationAvoidingDuplicates() {
+        mockAPI.shouldReturnError = false
+        viewModel = .init(movieAPI: mockAPI, model: .default)
+
+        for i in 1...50 {
+            mockAPI.moviesList = MovieResponse(
+                results: [
+                    .init(id: UUID().hashValue, posterPath: "path1", overview: "overview", title: "title1", voteAverage: 9.4, voteCount: 250, genres: [.init(id: 1, name: "Drama")], productionCompanies: []),
+                    .init(id: UUID().hashValue, posterPath: "path2", overview: "overview", title: "title2", voteAverage: 9.4, voteCount: 250, genres: [.init(id: 1, name: "Drama")], productionCompanies: [])
+                ],
+                page: i,
+                totalPages: 50,
+                totalResults: 100
+            )
+            
+            viewModel.getItems()
+
+            let expection = XCTestExpectation(description: "Wait for 25 milliseconds")
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(25), execute: {
+                expection.fulfill()
+            })
+
+            wait(for: [expection], timeout: 0.025)
+        }
+
+        XCTAssertTrue(viewModel.model.items.count == 100)
+
+        let ids = viewModel.model.items.map { $0.id }
+        var seenIds: Set<String> = .init()
+        for id in ids {
+            if seenIds.contains(id) {
+                XCTAssertThrowsError(TestError.foundDuplicates, "Found duplicates")
+            } else {
+                seenIds.insert(id)
+            }
+        }
+    }
+
+}
+
+enum TestError: Error {
+    case foundDuplicates
 }

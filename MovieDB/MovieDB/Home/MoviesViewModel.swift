@@ -13,7 +13,7 @@ import Foundation
 public final class MoviesViewModel {
     @Published public var model: MoviesModel
     public var movieAPI: MovieAPIProtocol
-    private var currentPage: Int = 0
+    private var currentPage: Int = 1
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -28,7 +28,7 @@ public final class MoviesViewModel {
     public func getItems() {
         model.isLoading = true
         
-        currentPage += 1
+        cancellables.forEach { $0.cancel() }
         movieAPI.list(page: currentPage)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { [weak self] completion in
@@ -36,6 +36,7 @@ public final class MoviesViewModel {
                 switch completion {
                 case .finished:
                     self.model.isLoading = false
+                    self.currentPage += 1
 
                 case let .failure(error):
                     self.model.isLoading = false
@@ -47,7 +48,8 @@ public final class MoviesViewModel {
                     let results = moviesList.results,
                     self.currentPage == moviesList.page
                 else { return }
-                
+
+                print(self.currentPage)
                 let newItems: [ItemThumbnailViewModel] = results.map({ movie in
                         .init(
                             id: "\(movie.id)",
@@ -57,7 +59,7 @@ public final class MoviesViewModel {
                             rating: movie.voteAverage ?? 0
                         )
                 })
-                self.model.items = self.model.items + newItems
+                self.model.items += newItems
             })
             .store(in: &cancellables)
     }
