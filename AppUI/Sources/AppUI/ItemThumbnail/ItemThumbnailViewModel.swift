@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ItemThumbnailViewModel: ViewModelProtocol {
+public struct ItemThumbnailViewModel: ViewModelProtocol, Identifiable {
     public let id: String
     public let title: String
     public let description: String

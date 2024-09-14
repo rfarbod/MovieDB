@@ -49,7 +49,6 @@ public final class MoviesViewModel {
                     self.currentPage == moviesList.page
                 else { return }
 
-                print(self.currentPage)
                 let newItems: [ItemThumbnailViewModel] = results.map({ movie in
                         .init(
                             id: "\(movie.id)",
@@ -59,7 +58,7 @@ public final class MoviesViewModel {
                             rating: movie.voteAverage ?? 0
                         )
                 })
-                self.model.items += newItems
+                self.model.items = (self.model.items + newItems).removeDuplicates()
             })
             .store(in: &cancellables)
     }
