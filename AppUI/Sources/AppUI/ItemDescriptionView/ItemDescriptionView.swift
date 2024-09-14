@@ -21,7 +21,26 @@ public final class ItemDescriptionView: StatefulView<ItemDescriptionViewModel> {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        setupView()
+    }
+
+    public override func didChangeModel() {
+        super.didChangeModel()
+
+        titleLabel.text = model.title
+        voteLabel.text = "\(model.voteAverage) / \(model.voteCount)"
+        descLabel.text = model.description
+    }
+
+    private func setupView() {
+        setupTitleLabel()
+        setupVoteImage()
+        setupVoteLabel()
+        setupDescLabel()
+    }
+
+    private func setupTitleLabel() {
         titleLabel.numberOfLines = 0
         titleLabel.font = .preferredFont(forTextStyle: .largeTitle)
         addSubview(titleLabel)
@@ -30,7 +49,9 @@ public final class ItemDescriptionView: StatefulView<ItemDescriptionViewModel> {
             make.leading.equalToSuperview().offset(Constants.padding)
             make.trailing.equalToSuperview().inset(Constants.padding)
         }
+    }
 
+    private func setupVoteImage() {
         voteImage.image = UIImage(systemName: "star.circle")
         voteImage.tintColor = .systemYellow
         addSubview(voteImage)
@@ -39,7 +60,9 @@ public final class ItemDescriptionView: StatefulView<ItemDescriptionViewModel> {
             make.trailing.equalToSuperview().inset(Constants.padding)
             make.width.height.equalTo(Constants.imageSize)
         }
+    }
 
+    private func setupVoteLabel() {
         voteLabel.numberOfLines = 0
         voteLabel.font = .preferredFont(forTextStyle: .caption1)
         addSubview(voteLabel)
@@ -47,7 +70,9 @@ public final class ItemDescriptionView: StatefulView<ItemDescriptionViewModel> {
             make.top.equalTo(voteImage.snp.bottom).offset(Constants.padding)
             make.trailing.equalToSuperview().inset(Constants.padding)
         }
+    }
 
+    private func setupDescLabel() {
         descLabel.numberOfLines = 0
         descLabel.font = .preferredFont(forTextStyle: .subheadline)
         addSubview(descLabel)
@@ -57,13 +82,5 @@ public final class ItemDescriptionView: StatefulView<ItemDescriptionViewModel> {
             make.trailing.equalToSuperview().inset(Constants.padding)
             make.bottom.equalToSuperview().priority(.low)
         }
-    }
-
-    public override func didChangeModel() {
-        super.didChangeModel()
-
-        titleLabel.text = model.title
-        voteLabel.text = "\(model.voteAverage) / \(model.voteCount)"
-        descLabel.text = model.description
     }
 }

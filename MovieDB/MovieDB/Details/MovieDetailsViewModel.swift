@@ -5,6 +5,7 @@
 //  Created by Farbod Rahiminik on 9/13/24.
 //
 
+import AppUI
 import AppDomain
 import Combine
 import Foundation
@@ -37,23 +38,23 @@ final class MovieDetailsViewModel {
             }, receiveValue: { [weak self] movieDetails in
                 guard let self else { return }
 
-                let logos = movieDetails.productionCompanies?.compactMap({ productionCompany in
-                    return (productionCompany.id, productionCompany.name, productionCompany.logoPath)
-                }) ?? []
+                let logos: [SectionItem] = movieDetails.productionCompanies?.compactMap { .init(id: $0.id, title: $0.name, imagePath: $0.logoPath) } ?? []
 
-                let genres = movieDetails.genres?.compactMap({ genre in
-                    return genre.name
-                }) ?? []
+                let genres: [SectionItem] = movieDetails.genres?.compactMap { .init(id: 0, title: $0.name, imagePath: "") } ?? []
 
                 self.model.itemDetailsViewModel = .init(
                     imagePath: movieDetails.posterPath ?? "",
                     title: movieDetails.title ?? "",
                     description: movieDetails.overview ?? "",
-                    logos: logos,
-                    genres: genres,
+                    sections: [
+                        genres,
+                        logos
+                    ],
                     rate: movieDetails.voteAverage ?? 0,
                     rateCount: movieDetails.voteCount ?? 0
                 )
+
+                self.model.isLoading = false
             })
             .store(in: &cancellables)
     }

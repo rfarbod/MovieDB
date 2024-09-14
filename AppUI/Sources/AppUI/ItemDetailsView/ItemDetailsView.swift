@@ -9,6 +9,13 @@ import Foundation
 import UIKit
 
 public final class ItemDetailsView: StatefulView<ItemDetailsViewModel> {
+    private enum Constants {
+        static let heightForHeader0: CGFloat = 300
+        static let heightForOtherHeaders: CGFloat = 50
+        static let padding: CGFloat = 15
+        static let fontSize: CGFloat = 15
+    }
+
     public lazy var tableView: UITableView = .init(frame: .zero, style: .plain)
 
     public override func viewDidLoad() {
@@ -41,7 +48,7 @@ public final class ItemDetailsView: StatefulView<ItemDetailsViewModel> {
 
 extension ItemDetailsView: UITableViewDataSource {
     public func numberOfSections(in tableView: UITableView) -> Int {
-        3
+        model.sections.count + 1
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -59,28 +66,15 @@ extension ItemDetailsView: UITableViewDataSource {
             cell.selectionStyle = .none
             return cell
 
-        case 1:
-            let cell = tableView.dequeue(cellOfType: TitleImageContainerCell.self, for: indexPath) { indexPath in
-                return .init(
-                    title: model.genres[indexPath.row],
-                    imagePath: ""
-                )
-            }
-            cell.selectionStyle = .none
-            return cell
-
-        case 2:
-            let cell = tableView.dequeue(cellOfType: TitleImageContainerCell.self, for: indexPath) { indexPath in
-                return .init(
-                    title: model.logos[indexPath.row].1,
-                    imagePath: model.logos[indexPath.row].2
-                )
-            }
-            cell.selectionStyle = .none
-            return cell
-
         default:
-            return UITableViewCell()
+            let cell = tableView.dequeue(cellOfType: TitleImageContainerCell.self, for: indexPath) { indexPath in
+                return .init(
+                    title: model.sections[indexPath.section - 1][indexPath.row].title,
+                    imagePath: model.sections[indexPath.section - 1][indexPath.row].imagePath
+                )
+            }
+            cell.selectionStyle = .none
+            return cell
         }
     }
 
@@ -89,14 +83,8 @@ extension ItemDetailsView: UITableViewDataSource {
         case 0:
             return 1
 
-        case 1:
-            return model.genres.count
-
-        case 2:
-            return model.logos.count
-
         default:
-            return 0
+            return model.sections[section - 1].count
         }
     }
 
@@ -108,14 +96,14 @@ extension ItemDetailsView: UITableViewDataSource {
         } else {
             let view = UIView()
             let label = UILabel()
-            label.font = .systemFont(ofSize: 15, weight: .medium)
+            label.font = .systemFont(ofSize: Constants.fontSize, weight: .medium)
             label.text = section == 1 ? "Genres" : "Production Companies"
             view.addSubview(label)
 
             label.snp.makeConstraints { make in
                 make.top.equalToSuperview()
-                make.leading.equalToSuperview().inset(15)
-                make.bottom.trailing.equalToSuperview().offset(15)
+                make.leading.equalToSuperview().inset(Constants.padding)
+                make.bottom.trailing.equalToSuperview().offset(Constants.padding)
             }
             return view
         }
@@ -125,9 +113,9 @@ extension ItemDetailsView: UITableViewDataSource {
 extension ItemDetailsView: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
-            return 300
+            return Constants.heightForHeader0
         } else {
-            return 50
+            return Constants.heightForOtherHeaders
         }
     }
 }

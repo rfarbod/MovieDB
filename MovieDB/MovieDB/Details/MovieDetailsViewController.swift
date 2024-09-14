@@ -33,32 +33,34 @@ final class MovieDetailsViewController: StatefulViewController<MovieDetailsModel
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .systemBackground
-
-        scrollView.delegate = self
-        view.addSubview(scrollView)
-        scrollView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-
-        scrollView.addSubview(contentView)
-        contentView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-            make.width.equalToSuperview()
-            make.height.equalToSuperview().priority(.low)
-        }
-
-        contentView.addSubview(detailsView)
-        detailsView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-
-        detailsView.accessibilityIdentifier = "MovieDetailsView"
+        setupView()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        setupViewModel()
+    }
 
+    override func didChangeModel() {
+        super.didChangeModel()
+
+        checkLoading()
+
+        detailsView.model = model.itemDetailsViewModel
+        title = model.itemDetailsViewModel.title
+        detailsView.layoutIfNeeded()
+    }
+
+    private func checkLoading() {
+        if model.isLoading {
+            view.addLoadingIndicator()
+        } else {
+            view.removeLoadingIndicator()
+        }
+    }
+
+    private func setupViewModel() {
         cancellable = viewModel.$model
             .sink { [weak self] updateModel in
                 self?.model = updateModel
@@ -67,12 +69,38 @@ final class MovieDetailsViewController: StatefulViewController<MovieDetailsModel
         viewModel.getMovieDetails()
     }
 
-    override func didChangeModel() {
-        super.didChangeModel()
+    private func setupView() {
+        view.backgroundColor = .systemBackground
 
-        detailsView.model = model.itemDetailsViewModel
-        title = model.itemDetailsViewModel.title
-        detailsView.layoutIfNeeded()
+        setupScrollView()
+        setupContentView()
+        setupDetailsView()
+    }
+
+    private func setupScrollView() {
+        scrollView.delegate = self
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+
+        scrollView.addSubview(contentView)
+    }
+
+    private func setupContentView() {
+        contentView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.width.equalToSuperview()
+            make.height.equalToSuperview().priority(.low)
+        }
+    }
+
+    private func setupDetailsView() {
+        contentView.addSubview(detailsView)
+        detailsView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        detailsView.accessibilityIdentifier = "MovieDetailsView"
     }
 }
 
