@@ -41,15 +41,20 @@ public final class MoviesViewModel {
                     print("error getting movies \(error)")
                 }
             }, receiveValue: { [weak self] moviesList in
-                guard let self else { return }
-                moviesList.results?.forEach({ movie in
-                    self.model.items.append(.init(
-                        id: "\(movie.id)",
-                        title: movie.title ?? "",
-                        description: movie.overview ?? "",
-                        imagePath: movie.posterPath ?? "",
-                        rating: movie.voteAverage ?? 0
-                    ))
+                guard
+                    let self,
+                    let results = moviesList.results,
+                    self.currentPage == moviesList.page
+                else { return }
+
+                self.model.items = self.model.items + results.map({ movie in
+                        .init(
+                            id: "\(movie.id)",
+                            title: movie.title ?? "",
+                            description: movie.overview ?? "",
+                            imagePath: movie.posterPath ?? "",
+                            rating: movie.voteAverage ?? 0
+                        )
                 })
             })
             .store(in: &cancellables)
