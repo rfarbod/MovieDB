@@ -8,34 +8,40 @@
 import XCTest
 
 final class MovieDBUITests: XCTestCase {
+    var app: XCUIApplication!
 
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        app = XCUIApplication()
+        app.launch()
 
-        // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        app = nil
     }
 
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
-
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testIfTableViewIsThere() {
+        let tableView = app.tables["MoviesTableView"]
+        XCTAssertTrue(tableView.exists, "The table view should exist on the screen")
     }
 
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
-        }
+    func testTableViewInteraction() {
+        let tableView = app.tables["MoviesTableView"]
+        let expectation = self.expectation(description: "Waiting for 5 seconds")
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0, execute: {
+            expectation.fulfill()
+        })
+
+        waitForExpectations(timeout: 5.0)
+
+        let firstCell = tableView.cells.element(boundBy: 0)
+        XCTAssertTrue(firstCell.exists, "The first cell should exist")
+
+        firstCell.tap()
+
+        let detailView = app.otherElements["MovieDetailsView"]
+        XCTAssertTrue(detailView.exists, "The detail view should be displayed after tapping the cell")
     }
 }

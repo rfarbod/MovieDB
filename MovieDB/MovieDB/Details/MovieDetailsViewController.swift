@@ -52,6 +52,8 @@ final class MovieDetailsViewController: StatefulViewController<MovieDetailsModel
         detailsView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+
+        detailsView.accessibilityIdentifier = "MovieDetailsView"
     }
 
     override func viewWillAppear(_ animated: Bool) {

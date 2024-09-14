@@ -29,7 +29,8 @@ final class MoviesViewController: StatefulViewController<MoviesModel> {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-
+        
+        tableView.accessibilityIdentifier = "MoviesTableView"
         tableView.register(cellOfType: ItemThumbnailContainerCell.self)
         tableView.delegate = self
         tableView.dataSource = self
