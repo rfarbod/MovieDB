@@ -47,7 +47,6 @@ public final class ItemDescriptionView: StatefulView<ItemDescriptionViewModel> {
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(Constants.padding)
             make.leading.equalToSuperview().offset(Constants.padding)
-            make.trailing.equalToSuperview().inset(Constants.padding)
         }
     }
 
@@ -59,6 +58,10 @@ public final class ItemDescriptionView: StatefulView<ItemDescriptionViewModel> {
             make.centerY.equalTo(titleLabel.snp.centerY)
             make.trailing.equalToSuperview().inset(Constants.padding)
             make.width.height.equalTo(Constants.imageSize)
+        }
+
+        titleLabel.snp.makeConstraints { make in
+            make.trailing.equalTo(voteImage.snp.leading).offset(Constants.padding)
         }
     }
 
