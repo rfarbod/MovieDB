@@ -10,7 +10,7 @@ import Foundation
 open class ContainerTableViewHeaderFooterView<ContentView: StatefulViewProtocol>: TableViewHeaderFooterView {
     class var isDynamicallyResizable: Bool { return false }
 
-    private(set) lazy var view: ContentView = .instantiate()
+    private(set) lazy var view: ContentView = .init()
 
     public var model: ContentView.Model {
         get { return view.model }

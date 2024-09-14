@@ -12,9 +12,7 @@ import UIKit
 open class ContainerTableViewCell<ContentView: StatefulViewProtocol>: TableViewCell {
     open class var isDynamicallyResizable: Bool { return true }
 
-    public private(set) lazy var view: ContentView = .instantiate(bundle: bundle)
-
-    open var bundle: Bundle = .main
+    public private(set) lazy var view: ContentView = .init()
 
     public var model: ContentView.Model {
         get { return view.model }

@@ -11,20 +11,12 @@ import UIKit
 public extension UITableView {
     func register<CellType: UITableViewCell>(cellOfType cellType: CellType.Type) {
         let identifier = String(describing: cellType)
-        if Bundle.main.path(forResource: identifier, ofType: "nib") != nil {
-            register(UINib(nibName: identifier, bundle: .main), forCellReuseIdentifier: identifier)
-        } else {
-            register(cellType, forCellReuseIdentifier: identifier)
-        }
+        register(cellType, forCellReuseIdentifier: identifier)
     }
 
     func register<HeaderFooterViewType: UITableViewHeaderFooterView>(headerFooterViewOfType headerFooterViewType: HeaderFooterViewType.Type) {
         let identifier = String(describing: headerFooterViewType)
-        if Bundle.main.path(forResource: identifier, ofType: "nib") != nil {
-            register(UINib(nibName: identifier, bundle: .main), forHeaderFooterViewReuseIdentifier: identifier)
-        } else {
-            register(headerFooterViewType, forHeaderFooterViewReuseIdentifier: identifier)
-        }
+        register(headerFooterViewType, forHeaderFooterViewReuseIdentifier: identifier)
     }
 
     func dequeue<HeaderFooterView: UITableViewHeaderFooterView>(headerFooterViewOfType headerFooterViewType: HeaderFooterView.Type) -> HeaderFooterView {

@@ -19,7 +19,7 @@ final class MovieDetailsViewController: StatefulViewController<MovieDetailsModel
 
     private lazy var scrollView: UIScrollView = .init()
     private lazy var contentView: UIView = .init()
-    private lazy var detailsView: ItemDetailsView = .instantiate()
+    private lazy var detailsView: ItemDetailsView = .init()
 
     private var cancellable: AnyCancellable?
 
