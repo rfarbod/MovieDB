@@ -17,14 +17,12 @@ enum ResponseType { case json }
 
 let baseUrl = "https://api.themoviedb.org/3"
 let imageBaseUrl = "https://image.tmdb.org/t/p/w500"
-let token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyNTA5OTU3YzkyZThiNWQ1ODMxZTllYTI4YjI4Njc2NiIsInN1YiI6IjY2MmZjN2IxNjlkMjgwMDEyMzQzOTBkZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.WIoztE5UxssrXbstmj4lf-cJ3hiHfN765_B5pebQemE"
 
 public protocol RequestProtocol {
     var baseURL: String { get }
     var path: String { get }
     var method: RequestMethod { get }
     var parameters: RequestParameters? { get }
-    var authorizationToken: String { get }
     var timeoutInterval: TimeInterval { get }
     var retryDelay: UInt64 { get }
 }
@@ -34,7 +32,6 @@ extension RequestProtocol {
     var method: RequestMethod { .get }
     var requestType: RequestType { .data }
     var responseType: ResponseType { .json }
-    var authorizationToken: String { "Bearer \(token)" }
     var timeoutInterval: TimeInterval { 30.0 }
     var retryDelay: UInt64 { 1_000_000_000 }
 
@@ -63,7 +60,6 @@ extension RequestProtocol {
         }
         var request = URLRequest(url: url, timeoutInterval: timeoutInterval)
         request.httpMethod = method.rawValue
-        request.setValue(authorizationToken, forHTTPHeaderField: "Authorization")
         request.cachePolicy = .returnCacheDataElseLoad
         return request
     }

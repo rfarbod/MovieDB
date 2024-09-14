@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Farbod Rahiminik on 9/11/24.
 //
@@ -10,6 +10,7 @@ import Foundation
 
 protocol MovieAPIProtocol {
     func list(page: Int) -> AnyPublisher<MovieResponse, Error>
+    func details(id: String) -> AnyPublisher<Movie, Error>
 }
 
 public final class MovieAPI: MovieAPIProtocol {
@@ -25,10 +26,19 @@ public final class MovieAPI: MovieAPIProtocol {
     }
 
     public func list(page: Int) -> AnyPublisher<MovieResponse, Error> {
-        return networkManager.request(api: MovieRequest.list(page: page), retryCount: 4)
+        networkManager.request(api: MovieRequest.list(page: page), retryCount: 4)
             .tryMap { [weak self] data in
                 guard let self else { throw APIError.invalidSelf}
                 return try self.jsonDecoder.decode(MovieResponse.self, from: data)
+            }
+            .eraseToAnyPublisher()
+    }
+
+    public func details(id: String) -> AnyPublisher<Movie, any Error> {
+        networkManager.request(api: MovieRequest.details(id: id), retryCount: 4)
+            .tryMap { [weak self] data in
+                guard let self else { throw APIError.invalidSelf }
+                return try self.jsonDecoder.decode(Movie.self, from: data)
             }
             .eraseToAnyPublisher()
     }

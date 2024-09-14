@@ -9,6 +9,7 @@ import Foundation
 
 enum MovieRequest {
     case list(page: Int)
+    case details(id: String)
 }
 
 extension MovieRequest: RequestProtocol {
@@ -16,6 +17,9 @@ extension MovieRequest: RequestProtocol {
         switch self {
         case .list:
             return "/movie/popular"
+
+        case let .details(id):
+            return "/movie/\(id)"
         }
     }
 
@@ -23,7 +27,13 @@ extension MovieRequest: RequestProtocol {
         switch self {
         case let .list(page):
             return [
-                "page": page
+                "page": page,
+                "api_key" : "55957fcf3ba81b137f8fc01ac5a31fb5"
+            ]
+
+        case .details:
+            return [
+                "api_key" : "55957fcf3ba81b137f8fc01ac5a31fb5"
             ]
         }
     }
