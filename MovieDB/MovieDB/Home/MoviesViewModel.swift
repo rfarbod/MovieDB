@@ -6,6 +6,7 @@
 //
 
 import AppDomain
+import AppUI
 import Combine
 import Foundation
 
@@ -46,8 +47,8 @@ public final class MoviesViewModel {
                     let results = moviesList.results,
                     self.currentPage == moviesList.page
                 else { return }
-
-                self.model.items = self.model.items + results.map({ movie in
+                
+                let newItems: [ItemThumbnailViewModel] = results.map({ movie in
                         .init(
                             id: "\(movie.id)",
                             title: movie.title ?? "",
@@ -56,6 +57,8 @@ public final class MoviesViewModel {
                             rating: movie.voteAverage ?? 0
                         )
                 })
+
+                self.model.items = self.model.items + newItems
             })
             .store(in: &cancellables)
     }
