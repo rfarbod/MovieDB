@@ -33,7 +33,7 @@ final class MovieDBTests: XCTestCase {
         mockAPI.moviesList = MovieResponse(
             results: [
                 .init(id: 1, posterPath: "path1", overview: "overview", title: "title1", voteAverage: 9.4, voteCount: 250, genres: [.init(id: 1, name: "Drama")], productionCompanies: []),
-                .init(id: 1, posterPath: "path1", overview: "overview", title: "title2", voteAverage: 9.4, voteCount: 250, genres: [.init(id: 1, name: "Drama")], productionCompanies: [])
+                .init(id: 2, posterPath: "path1", overview: "overview", title: "title2", voteAverage: 9.4, voteCount: 250, genres: [.init(id: 1, name: "Drama")], productionCompanies: [])
             ],
             page: 1,
             totalPages: 10,
