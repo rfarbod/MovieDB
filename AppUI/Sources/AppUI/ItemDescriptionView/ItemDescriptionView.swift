@@ -11,6 +11,8 @@ import UIKit
 public final class ItemDescriptionView: StatefulView<ItemDescriptionViewModel> {
     private enum Constants {
         static let padding: CGFloat = 15
+        static let titlePadding: CGFloat = 75
+        static let descPadding: CGFloat = 25
         static let imageSize: CGFloat = 25
     }
 
@@ -47,6 +49,7 @@ public final class ItemDescriptionView: StatefulView<ItemDescriptionViewModel> {
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(Constants.padding)
             make.leading.equalToSuperview().offset(Constants.padding)
+            make.trailing.equalToSuperview().inset(Constants.titlePadding)
         }
     }
 
@@ -59,10 +62,6 @@ public final class ItemDescriptionView: StatefulView<ItemDescriptionViewModel> {
             make.trailing.equalToSuperview().inset(Constants.padding)
             make.width.height.equalTo(Constants.imageSize)
         }
-
-        titleLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(voteImage.snp.leading).offset(Constants.padding)
-        }
     }
 
     private func setupVoteLabel() {
@@ -72,6 +71,7 @@ public final class ItemDescriptionView: StatefulView<ItemDescriptionViewModel> {
         voteLabel.snp.makeConstraints { make in
             make.top.equalTo(voteImage.snp.bottom).offset(Constants.padding)
             make.trailing.equalToSuperview().inset(Constants.padding)
+            make.bottom.equalTo(titleLabel.snp.bottom).inset(Constants.padding)
         }
     }
 
@@ -80,7 +80,7 @@ public final class ItemDescriptionView: StatefulView<ItemDescriptionViewModel> {
         descLabel.font = .preferredFont(forTextStyle: .subheadline)
         addSubview(descLabel)
         descLabel.snp.makeConstraints { make in
-            make.top.equalTo(voteLabel.snp.bottom).offset(Constants.padding)
+            make.top.equalTo(voteLabel.snp.bottom).offset(Constants.descPadding)
             make.leading.equalToSuperview().offset(Constants.padding)
             make.trailing.equalToSuperview().inset(Constants.padding)
             make.bottom.equalToSuperview().priority(.low)

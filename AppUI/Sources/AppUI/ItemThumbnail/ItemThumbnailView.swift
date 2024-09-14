@@ -14,6 +14,7 @@ public final class ItemThumbnailView: StatefulView<ItemThumbnailViewModel> {
     private enum Constants {
         static let cornerRadius: CGFloat = 15
         static let padding: CGFloat = 10
+        static let titlePadding: CGFloat = 25
         static let imageViewHeight: CGFloat = 150
         static let imageViewWidth: CGFloat = 100
         static let ratingHeight: CGFloat = 25
@@ -100,7 +101,7 @@ public final class ItemThumbnailView: StatefulView<ItemThumbnailViewModel> {
             guard let self else { return }
 
             make.top.leading.equalToSuperview().offset(Constants.padding)
-            make.trailing.equalTo(self.ratingLabel.snp.leading).inset(Constants.padding)
+            make.trailing.equalTo(self.ratingLabel.snp.leading).offset(-Constants.titlePadding)
         }
     }
 
